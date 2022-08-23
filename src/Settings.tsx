@@ -39,7 +39,9 @@ export const Settings = () => {
   };
 
   useEffect(() => {
-    clearTimeout(timeoutId.current);
+    return () => {
+      clearTimeout(timeoutId.current);
+    };
   }, []);
 
   const getLastUpdatedTime = () => {

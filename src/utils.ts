@@ -1,5 +1,5 @@
 export const settingsKey = '$$n$$';
-export const fix = (value: number) => Number(value.toFixed(2));
+export const KG_COEFFICIENT = 2.20462;
 
 export interface Settings {
   kgs: number;
@@ -37,3 +37,5 @@ export const updateSettings = (settings: Partial<Settings>) => {
     })
   );
 };
+
+export const fix = (value: number) => Number(value.toFixed(2));

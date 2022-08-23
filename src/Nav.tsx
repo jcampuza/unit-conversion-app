@@ -26,6 +26,29 @@ export const Nav = () => {
       </Link>
 
       <Link
+        to="/convert"
+        title="Settings"
+        className="p-4 text-center w-full border-r border-purple-900 flex justify-center"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="stroke-purple-900"
+          width={24}
+          height={24}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+          />
+        </svg>
+      </Link>
+
+      <Link
         to="/settings"
         title="Settings"
         className="p-4 text-center w-full border-purple-900 flex justify-center"
