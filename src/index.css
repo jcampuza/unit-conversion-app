@@ -56,17 +56,3 @@
     border-bottom: 2px solid rebeccapurple;
   }
 }
-
-@layer components {
-  .button-group {
-    @apply flex gap-2;
-  }
-
-  .stack {
-    @apply flex flex-col gap-4;
-  }
-
-  .field {
-    @apply flex flex-col mb-2;
-  }
-}

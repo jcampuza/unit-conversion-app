@@ -20,9 +20,7 @@ export function Home() {
   };
 
   useEffect(() => {
-    updateSettings({
-      max: max,
-    });
+    updateSettings({ max: max });
   }, [max]);
 
   return (
