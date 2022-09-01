@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { fix } from './utils';
+import { fix, isNumeric } from '../lib/utils';
 
 const value = new Map([
   [1, 1.0],
@@ -35,24 +35,28 @@ const value = new Map([
 ]);
 
 export const OneRepMax = () => {
-  const [weight, setWeight] = useState(0);
-  const [reps, setReps] = useState(0);
+  const [weight, setWeight] = useState('');
+  const [reps, setReps] = useState('');
 
   const onWeightChange = (e: React.FormEvent<HTMLInputElement>) => {
-    return setWeight(Number(e.currentTarget.value));
+    return setWeight(e.currentTarget.value);
   };
 
   const onRepsChange = (e: React.FormEvent<HTMLInputElement>) => {
-    return setReps(Number(e.currentTarget.value));
+    return setReps(e.currentTarget.value);
   };
 
+  const areNumbericValues = isNumeric(reps) && isNumeric(weight);
+  const respNum = Number(reps);
+  const repsWeight = Number(weight);
+
   const getOneRepMax = () => {
-    const percent = value.get(reps);
+    const percent = value.get(respNum);
     if (!percent) {
       return null;
     }
 
-    return fix(weight / percent);
+    return fix(repsWeight / percent);
   };
 
   return (
@@ -60,16 +64,20 @@ export const OneRepMax = () => {
       <div className="space-y-2 mb-4">
         <label className="flex flex-col">
           <span>Weight (lbs)</span>
-          <input value={weight} type="number" pattern="[0-9]*" onChange={onWeightChange} />
+          <input value={weight} pattern="\d+" onChange={onWeightChange} />
         </label>
 
         <label className="flex flex-col">
           <span>Reps</span>
-          <input value={reps} type="number" pattern="[0-9]*" onChange={onRepsChange} />
+          <input value={reps} pattern="[0-9]*" onChange={onRepsChange} />
         </label>
       </div>
 
-      <div>Estimated One Rep Max: {getOneRepMax() ?? 'Please enter reps below 30'}</div>
+      {areNumbericValues ? (
+        <div>Estimated One Rep Max: {getOneRepMax() ?? 'Please enter reps below 30'}</div>
+      ) : (
+        <div>Please enter numberic values</div>
+      )}
     </main>
   );
 };

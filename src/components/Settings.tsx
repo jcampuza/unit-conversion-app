@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
-import { fix, getSettings, updateSettings } from './utils';
+import { fix, getSettings, updateSettings } from '../lib/utils';
 
 export const Settings = () => {
   const values = getSettings();

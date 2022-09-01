@@ -1,5 +1,5 @@
-import { ChangeEvent, useEffect, useState } from 'react';
-import { fix, getSettings, KG_COEFFICIENT, updateSettings } from './utils';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { fix, getSettings, KG_COEFFICIENT, updateSettings } from '../lib/utils';
 
 export const Convert = () => {
   const settings = getSettings();
@@ -58,10 +58,7 @@ export const Convert = () => {
   };
 
   useEffect(() => {
-    updateSettings({
-      kgs: values.kgs,
-      lbs: values.lbs,
-    });
+    updateSettings({ kgs: values.kgs, lbs: values.lbs });
   }, [values]);
 
   return (

@@ -39,3 +39,8 @@ export const updateSettings = (settings: Partial<Settings>) => {
 };
 
 export const fix = (value: number) => Number(value.toFixed(2));
+
+export const isNumeric = (str: string) => {
+  if (typeof str != 'string') return false;
+  return !isNaN(str as unknown as number) && !isNaN(parseFloat(str));
+};
