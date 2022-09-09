@@ -16,21 +16,28 @@ export interface Settings {
   lastUpdatedTimestamp: number | null;
 }
 
+const DEFAULTS: Settings = {
+  kgs: 0,
+  lbs: 0,
+  max: 0,
+  bench: 0,
+  squat: 0,
+  mode: Mode.lbs,
+  lastUpdatedTimestamp: null,
+};
+
 export const getSettings = () => {
   const item = localStorage.getItem(settingsKey);
   if (!item) {
-    return {
-      kgs: 0,
-      lbs: 0,
-      max: 0,
-      bench: 0,
-      squat: 0,
-      mode: Mode.lbs,
-      lastUpdatedTimestamp: null,
-    } as Settings;
+    return DEFAULTS;
   }
 
-  return JSON.parse(item) as Settings;
+  const parsed = JSON.parse(item) as Settings;
+
+  return {
+    ...DEFAULTS,
+    ...parsed,
+  };
 };
 
 export const updateSettings = (settings: Partial<Settings>) => {
