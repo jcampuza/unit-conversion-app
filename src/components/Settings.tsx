@@ -1,10 +1,11 @@
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
-import { fix, getSettings, updateSettings } from '../lib/utils';
+import { fix, getSettings, Mode, updateSettings } from '../lib/utils';
 
 export const Settings = () => {
   const values = getSettings();
   const [bench, setBench] = useState(values.bench ?? 0);
   const [squat, setSquat] = useState(values.squat ?? 0);
+  const [mode, setMode] = useState(values.mode ?? Mode.lbs);
   const [lastUpdated, setLastUpdated] = useState(values.lastUpdatedTimestamp ?? null);
   const [saved, setSaved] = useState(false);
 
@@ -28,7 +29,12 @@ export const Settings = () => {
     }
 
     const updateTimeStamp = Date.now();
-    updateSettings({ bench: bench, squat: squat, lastUpdatedTimestamp: updateTimeStamp });
+    updateSettings({
+      bench: bench,
+      squat: squat,
+      lastUpdatedTimestamp: updateTimeStamp,
+      mode: mode,
+    });
     setLastUpdated(updateTimeStamp);
     setSaved(true);
 
@@ -56,8 +62,8 @@ export const Settings = () => {
 
   return (
     <main className="p-4">
-      <form onSubmit={handleSubmit}>
-        <div className="space-y-4">
+      <form onSubmit={handleSubmit} className="mb-4">
+        <div className="space-y-4 mb-4">
           <ul className="space-y-4">
             <li>
               <label className="flex flex-col">
@@ -73,15 +79,42 @@ export const Settings = () => {
               </label>
             </li>
           </ul>
+        </div>
 
-          <div>
-            <button type="submit">Update</button>
-            {saved ? <span style={{ marginLeft: '1rem' }}>Saved!</span> : null}
+        <div className="mb-4">
+          <p className="mb-2">Mode</p>
+          <div className="flex gap-4">
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="mode"
+                value="lbs"
+                checked={mode === 'lbs'}
+                onChange={() => setMode(Mode.lbs)}
+              />
+              <span className="ml-2">Lbs</span>
+            </label>
+
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="mode"
+                value="kg"
+                checked={mode === 'kgs'}
+                onChange={() => setMode(Mode.kgs)}
+              />
+              <span className="ml-2">Kgs</span>
+            </label>
           </div>
+        </div>
 
-          {lastUpdatedTime ? <div className="mt-4">Last Updated: {lastUpdatedTime}</div> : null}
+        <div>
+          <button type="submit">Update</button>
+          {saved ? <span style={{ marginLeft: '1rem' }}>Saved!</span> : null}
         </div>
       </form>
+
+      {lastUpdatedTime ? <div className="mt-4">Last Updated: {lastUpdatedTime}</div> : null}
     </main>
   );
 };

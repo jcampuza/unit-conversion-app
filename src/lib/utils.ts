@@ -1,12 +1,18 @@
 export const settingsKey = '$$n$$';
 export const KG_COEFFICIENT = 2.20462;
 
+export enum Mode {
+  lbs = 'lbs',
+  kgs = 'kgs',
+}
+
 export interface Settings {
   kgs: number;
   lbs: number;
   max: number;
   bench: number;
   squat: number;
+  mode: Mode;
   lastUpdatedTimestamp: number | null;
 }
 
@@ -19,6 +25,7 @@ export const getSettings = () => {
       max: 0,
       bench: 0,
       squat: 0,
+      mode: Mode.lbs,
       lastUpdatedTimestamp: null,
     } as Settings;
   }
@@ -38,7 +45,7 @@ export const updateSettings = (settings: Partial<Settings>) => {
   );
 };
 
-export const fix = (value: number) => Number(value.toFixed(2));
+export const fix = (value: number) => Number(value.toFixed(1));
 
 export const isNumeric = (str: string) => {
   if (typeof str != 'string') return false;

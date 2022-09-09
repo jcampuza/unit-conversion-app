@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { fix, getSettings, KG_COEFFICIENT, updateSettings } from '../lib/utils';
 
 export const Convert = () => {
