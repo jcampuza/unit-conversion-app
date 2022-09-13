@@ -1,14 +1,12 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { fix, getSettings, KG_COEFFICIENT, updateSettings } from '../lib/utils';
+import { useStore, useUpdateStore } from '../lib/store';
+import { fix, KG_COEFFICIENT } from '../lib/utils';
 
 export const Convert = () => {
-  const settings = getSettings();
-  const [values, setValues] = useState(() => {
-    return {
-      lbs: settings.lbs,
-      kgs: settings.kgs,
-    };
-  });
+  const { lbs, kgs } = useStore(({ lbs, kgs }) => ({ lbs, kgs }));
+  const updateStore = useUpdateStore();
+
+  const [values, setValues] = useState(() => ({ lbs, kgs }));
 
   const kgPlus = () => {
     setValues(({ kgs }) => ({
@@ -58,8 +56,8 @@ export const Convert = () => {
   };
 
   useEffect(() => {
-    updateSettings({ kgs: values.kgs, lbs: values.lbs });
-  }, [values]);
+    updateStore((s) => ({ ...s, kgs: values.kgs, lbs: values.lbs }));
+  }, [updateStore, values]);
 
   return (
     <main className="p-4">

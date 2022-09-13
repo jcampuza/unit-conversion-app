@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { fix, getSettings, KG_COEFFICIENT, Mode, updateSettings } from '../lib/utils';
+import { useStore, useUpdateStore, Mode } from '../lib/store';
+import { fix, KG_COEFFICIENT } from '../lib/utils';
 
 const PERCENTAGES = [65, 70, 75, 80, 85, 90, 95].map((n) => n / 100);
 
@@ -38,29 +39,32 @@ function getKgsFromLbs(primaryRoundedAmount: number) {
   return fix(primaryRoundedAmount / KG_COEFFICIENT);
 }
 
-export function Home() {
-  const settings = getSettings();
-  const [max, setMax] = useState(settings.max ?? 0);
+export const Home = () => {
+  const { squat, bench, deadlift, max: settingsMax, mode } = useStore((state) => state);
+  const updateStore = useUpdateStore();
+  const [max, setMax] = useState(settingsMax ?? 0);
 
   const useSquatMax = () => {
-    const { squat } = getSettings();
     setMax(squat);
   };
 
   const useBenchMax = () => {
-    const { bench } = getSettings();
     setMax(bench);
   };
 
+  const useDeadliftMax = () => {
+    setMax(deadlift);
+  };
+
   useEffect(() => {
-    updateSettings({ max: max });
-  }, [max]);
+    updateStore((state) => ({ ...state, max }));
+  }, [max, updateStore]);
 
   return (
     <main className="p-4">
       <div className="space-y-2">
         <label className="flex flex-col">
-          <span>Training Max ({settings.mode})</span>
+          <span>Training Max ({mode})</span>
 
           <input
             value={max}
@@ -70,20 +74,22 @@ export function Home() {
           />
         </label>
         <div className="flex gap-2">
-          <button onClick={useSquatMax}>Use Squat Max</button>
-          <button onClick={useBenchMax}>Use Bench Max</button>
+          <button onClick={useBenchMax}>Bench Max</button>
+          <button onClick={useSquatMax}>Squat Max</button>
+          <button onClick={useDeadliftMax}>Deadlift Max</button>
         </div>
       </div>
 
       <PercentageTable max={max} />
     </main>
   );
-}
+};
 
 export default Home;
 
-function PercentageTable({ max }: { max: number }) {
-  const { mode } = getSettings();
+const PercentageTable = ({ max }: { max: number }) => {
+  const mode = useStore((state) => state.mode);
+
   return (
     <table>
       <thead>
@@ -114,4 +120,4 @@ function PercentageTable({ max }: { max: number }) {
       </tbody>
     </table>
   );
-}
+};

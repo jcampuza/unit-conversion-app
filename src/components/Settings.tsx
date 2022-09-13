@@ -1,10 +1,14 @@
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
-import { fix, getSettings, Mode, updateSettings } from '../lib/utils';
+import { Mode, useStore, useUpdateStore } from '../lib/store';
+import { fix } from '../lib/utils';
 
 export const Settings = () => {
-  const values = getSettings();
+  const values = useStore((s) => s);
+  const updateStore = useUpdateStore();
+
   const [bench, setBench] = useState(values.bench ?? 0);
   const [squat, setSquat] = useState(values.squat ?? 0);
+  const [deadlift, setDeadlift] = useState(values.deadlift ?? 0);
   const [mode, setMode] = useState(values.mode ?? Mode.lbs);
   const [lastUpdated, setLastUpdated] = useState(values.lastUpdatedTimestamp ?? null);
   const [saved, setSaved] = useState(false);
@@ -19,6 +23,11 @@ export const Settings = () => {
     setSquat(fix(value));
   };
 
+  const handleDeadliftChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.currentTarget.value);
+    setDeadlift(fix(value));
+  };
+
   const timeoutId = useRef<NodeJS.Timeout>();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -29,12 +38,15 @@ export const Settings = () => {
     }
 
     const updateTimeStamp = Date.now();
-    updateSettings({
-      bench: bench,
-      squat: squat,
+
+    updateStore((s) => ({
+      ...s,
+      bench,
+      squat,
+      deadlift,
       lastUpdatedTimestamp: updateTimeStamp,
       mode: mode,
-    });
+    }));
     setLastUpdated(updateTimeStamp);
     setSaved(true);
 
@@ -76,6 +88,18 @@ export const Settings = () => {
               <label className="flex flex-col">
                 <span>Squat Training Max</span>
                 <input value={squat} type="number" pattern="[0-9]*" onChange={handleSquatChange} />
+              </label>
+            </li>
+
+            <li>
+              <label className="flex flex-col">
+                <span>Deadlift Training Max</span>
+                <input
+                  value={deadlift}
+                  type="number"
+                  pattern="[0-9]*"
+                  onChange={handleDeadliftChange}
+                />
               </label>
             </li>
           </ul>

@@ -1,7 +1,6 @@
 import { HTMLAttributes } from 'react';
 
-export const Switch = (props: HTMLAttributes<HTMLInputElement>) => {
-  const { children, ...rest } = props;
+export const Switch = ({ children, ...rest }: HTMLAttributes<HTMLInputElement>) => {
   return (
     <label htmlFor="checked-toggle" className="inline-flex relative items-center cursor-pointer">
       <input type="checkbox" className="sr-only peer" {...rest} />

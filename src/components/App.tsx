@@ -13,7 +13,7 @@ const OneRepMax = lazier(() => import('./OneRepMax').then((c) => c.OneRepMax));
 
 const Settings = lazier(() => import('./Settings').then((c) => c.Settings));
 
-export function App() {
+export const App = () => {
   return (
     <BrowserRouter>
       <div className="h-screen flex flex-col">
@@ -32,4 +32,4 @@ export function App() {
       </div>
     </BrowserRouter>
   );
-}
+};
