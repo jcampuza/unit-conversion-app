@@ -10,7 +10,7 @@ export default defineConfig({
     eslint(),
     analyze(),
     VitePWA({
-      registerType: 'prompt',
+      registerType: 'autoUpdate',
       includeAssets: [
         'android-chrome-192x192.png',
         'android-chrome-512x512.png',
