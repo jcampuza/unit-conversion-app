@@ -3,20 +3,13 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    height: -webkit-fill-available;
+  .viewport-full {
+    height: calc(var(--vh, 1vh));
   }
 
-  body {
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
-  }
-
+  html,
+  body,
   #root {
-    @apply h-full;
-  }
-
-  .full-height {
     height: calc(var(--vh, 1vh));
   }
 

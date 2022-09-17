@@ -5,6 +5,9 @@ import { lazier } from './lib/lazier';
 import { Root } from './pages/Root';
 import { Spinner } from './components/Spinner';
 import './index.css';
+import { setupViewportHeightListener } from './lib/viewportHeight';
+
+setupViewportHeightListener();
 
 const Home = lazier(() => import('./pages/Home').then((c) => c.Home));
 const Convert = lazier(() => import('./pages/Convert').then((c) => c.Convert));
