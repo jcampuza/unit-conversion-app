@@ -39,11 +39,11 @@ export const OneRepMax = () => {
   const [reps, setReps] = useState('');
 
   const onWeightChange = (e: React.FormEvent<HTMLInputElement>) => {
-    return setWeight(e.currentTarget.value);
+    setWeight(e.currentTarget.value);
   };
 
   const onRepsChange = (e: React.FormEvent<HTMLInputElement>) => {
-    return setReps(e.currentTarget.value);
+    setReps(e.currentTarget.value);
   };
 
   const areNumbericValues = isNumeric(reps) && isNumeric(weight);

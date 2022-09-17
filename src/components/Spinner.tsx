@@ -4,7 +4,7 @@ export const Spinner = () => {
   const [timedOut, setTimedOut] = useState(false);
 
   useEffect(() => {
-    const id = setTimeout(() => setTimedOut(true), 200);
+    const id = setTimeout(() => setTimedOut(true), 100);
     return () => clearTimeout(id);
   }, []);
 
