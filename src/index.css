@@ -3,10 +3,12 @@
 @tailwind utilities;
 
 @layer base {
-  html,
-  body,
   #root {
     @apply h-full;
+  }
+
+  .full-height {
+    height: calc(var(--vh, 1vh));
   }
 
   button {

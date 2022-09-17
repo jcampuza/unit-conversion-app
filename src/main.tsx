@@ -5,6 +5,7 @@ import { lazier } from './lib/lazier';
 import { Root } from './pages/Root';
 import { Spinner } from './components/Spinner';
 import './index.css';
+import { createViewportHeightListener } from './lib/viewportHeight';
 
 const Home = lazier(() => import('./pages/Home').then((c) => c.Home));
 const Convert = lazier(() => import('./pages/Convert').then((c) => c.Convert));
@@ -35,6 +36,8 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
+createViewportHeightListener();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
